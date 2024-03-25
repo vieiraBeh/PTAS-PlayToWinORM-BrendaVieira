@@ -6,6 +6,13 @@ const Usuario = require("./models/Usuarios");
 const express = require("express")
 const app = express();
 
+app.use(
+    express.urlencoded({
+        extended: true,
+    })
+);
+app.use(espress.json());
+
 app.get("/usuarios/novo", (req, res) => {
     res.sendFile(`${__dirname}/views/formUsuario.html`);
 });
