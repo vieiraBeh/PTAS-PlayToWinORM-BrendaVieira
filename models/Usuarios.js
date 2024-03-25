@@ -1,7 +1,7 @@
 const conn = require ("../db/conn");
 const { DataTypes } = require("sequelize");
 
-const Usuario = db.define("Usuario", {
+const Usuario = conn.define("Usuario", {
     nickname: {
         type: DataTypes.STRING,
         required: true,
@@ -12,4 +12,4 @@ const Usuario = db.define("Usuario", {
     },
 });
 
-module.exports = sequelize;
+module.exports = Usuario;
