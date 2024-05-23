@@ -1,10 +1,13 @@
 require("dotenv").config();
 const conn = require("./db/conn");
-
 const Usuario = require("./models/Usuarios");
+const express = require("express");
+const exphbs = require("express");
 
-const express = require("express")
 const app = express();
+
+app.engine("handlebars", exphbs.engine());
+app.set("view engine", "handlebars")
 
 app.use(
     express.urlencoded({
@@ -14,7 +17,7 @@ app.use(
 app.use(espress.json());
 
 app.get("/usuarios/novo", (req, res) => {
-    res.sendFile(`${__dirname}/views/formUsuario.html`);
+    res.render("formUsuario");
 });
 
 app.post("/usuarios/novo", (req, res) =>{
