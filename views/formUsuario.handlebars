@@ -1,21 +1,23 @@
-<!DOCTYPE html>
-<html lang="PT-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="/usuarios/novo" method="post">
-      <div>
-        <label for="nickname">Nickname:</label>
-        <input type="text" id="nickname" name="nickname" />
-      </div>
-      <div>
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" />
-      </div>
-      <input type="submit" value="Cadastrar" />
+ <!-- Definindo se é um usuário de atualização ou cadastro... -->
+ {{#if usuario}}
+ <form action="/usuarios/{{usuario.id}}/update" method="post">
+{{else}}
+
+<form action="/usuarios/novo" method="post"></form>
+{{/if}}
+        <div>
+            <label for="nickname">Nickname:</label>
+            <input type="text" id="nickname" name="nickname" value={{usuario.nickname}}>
+        </div>
+
+        <div>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" value={{usuario.nome}}>
+        </div>
+
+        {{#if usuario}}
+        <input type="submit" value="SALVAR"/>
+        {{else}}
+        <input type="submit" value="CADASTRAR"/>
+        {{/if}}
     </form>
-  </body>
-</html>
