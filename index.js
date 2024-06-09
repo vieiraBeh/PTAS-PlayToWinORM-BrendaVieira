@@ -20,15 +20,12 @@ app.use(
 
 app.use(express.json());
 
-const Usuario = require("./models/Usuario");
-
 app.get("/", (req,res) => {
   res.render("home");
 });
 
-app.get("/usuarios/novo", (req, res) => {
-  res.render("formUsuario");
-});
+const Usuario = require("./models/Usuario");
+
 
 app.get("/usuarios", async (req, res) => {
   const usuarios = await Usuario.findAll({
@@ -37,21 +34,21 @@ app.get("/usuarios", async (req, res) => {
   res.render("usuarios",{usuarios});
 });
 
-app.post("/usuarios/novo", async (req, res) => {
-  const nickname = req.body.nickname;
-  const nome = req.body.nome;
+app.get("/usuarios/novo", (req, res) => {
+  res.render("formUsuario");
+});
 
-  
-  const dadosUsuario = {
-    nickname,
-    nome,
+app.post("/usuarios/novo", async (req, res) => {
+  const dadosUsuario ={
+   nickname: req.body.nickname,
+   nome: req.body.nome,
   };
 
   const usuario = await Usuario.create(dadosUsuario);
   res.send("Usuário inserido: " + usuario.id);
 });
 
-app.get("/usuarios/:id/update" , (req,res) =>{
+app.get("/usuarios/:id/update", async (req,res) =>{
   const id = parseInt(req.params.id);
   const usuario = Usuario.findByPk(id, ({raw:true}));
 
@@ -71,7 +68,8 @@ app.post("usuario/:id/updade", async(req,res) => {
     nome : req.body.nome,
   };
 
-  const retorno = await Usuario.update(dadosUsuario,{where: {id:id}});
+  const retorno = await Usuario.update(dadosUsuario,
+    {where: {id:id}});
 
   if (retorno > 0) {
     res.redirect("/usuarios");
@@ -79,6 +77,17 @@ app.post("usuario/:id/updade", async(req,res) => {
     res.send("Erro ao atualizar usuário");
   }
 
+});
+
+app.post("/usuarios/:id/delete", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const retorno = await Usuario.destroy({ where: { id: id } });
+
+  if (retorno > 0) {
+    res.redirect("/usuarios");
+  } else {
+    res.send("Erro ao excluir usuário");
+  }
 });
 
 app.listen(3000,() => {
