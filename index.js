@@ -26,12 +26,12 @@ app.get("/", (req,res) => {
 
 const Usuario = require("./models/Usuario");
 
-
 app.get("/usuarios", async (req, res) => {
   const usuarios = await Usuario.findAll({
-    raw:true });
+    raw:true
+   });
 
-  res.render("usuarios",{usuarios});
+  res.render("usuarios",{ usuarios });
 });
 
 app.get("/usuarios/novo", (req, res) => {
@@ -39,7 +39,7 @@ app.get("/usuarios/novo", (req, res) => {
 });
 
 app.post("/usuarios/novo", async (req, res) => {
-  const dadosUsuario ={
+  const dadosUsuario = {
    nickname: req.body.nickname,
    nome: req.body.nome,
   };
@@ -50,17 +50,12 @@ app.post("/usuarios/novo", async (req, res) => {
 
 app.get("/usuarios/:id/update", async (req,res) =>{
   const id = parseInt(req.params.id);
-  const usuario = Usuario.findByPk(id, ({raw:true}));
+  const usuario = await Usuario.findByPk(id, { raw:true });
 
-  res.render("formUsuario", {usuario});
-
-  //const usuario = Usuario.findOne({
-   // where: {id: id},
-    //raw: true,
-  //});
+  res.render("formUsuario", { usuario });
 });
 
-app.post("usuario/:id/updade", async(req,res) => {
+app.post("/usuarios/:id/update", async(req,res) => {
   const id = parseInt(req.params.id);
 
   const dadosUsuario = {
@@ -68,12 +63,13 @@ app.post("usuario/:id/updade", async(req,res) => {
     nome : req.body.nome,
   };
 
-  const retorno = await Usuario.update(dadosUsuario,
-    {where: {id:id}});
+  const retorno = await Usuario.update(dadosUsuario, {
+    where: {id: id}
+  });
 
   if (retorno > 0) {
     res.redirect("/usuarios");
-  }else {
+  } else {
     res.send("Erro ao atualizar usuário");
   }
 
@@ -90,7 +86,7 @@ app.post("/usuarios/:id/delete", async (req, res) => {
   }
 });
 
-app.listen(3000,() => {
+app.listen(3000, () => {
   console.log("O servidor está rodando na porta 3000.")
 });
 

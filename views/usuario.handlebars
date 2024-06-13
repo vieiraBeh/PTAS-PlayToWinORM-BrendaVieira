@@ -1,8 +1,5 @@
-<h1>Usuários Cadastrados</h1>
+<h1>Usuários Cadastrados:</h1>
 
-<table border="1">
-    <tr>
-        <h1>Usuários Cadastrados:</h1>
 <a href="/usuarios/novo">Cadastrar novo usuário.</a>
 <table border="1">
    <tr>
@@ -17,9 +14,10 @@
     <td>{{this.nome}}</td>
     <td>
       <a href="/usuarios/{{this.id}}/update">Atualizar usuário.</a>
+      <form action="/usuarios/{{this.id}}/delete" method="post">
+      <input type="submit" value="EXCLUIR"/>
+      </form>
     </td>
    </tr>
    {{/each}}
-</table>
-    </tr>
 </table>
