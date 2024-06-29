@@ -181,7 +181,7 @@ app.get("/jogos/:id/conquistas/novaConquista", async (req, res) => {
 });
 
 //Cadastro de conquista
-app.post("/jogos/:id/conquistas/novoConquista", async (req, res) => {
+app.post("/jogos/:id/conquistas/novaConquista", async (req, res) => {
   const id = parseInt(req.params.id);
 
   const dadosConquista = {
