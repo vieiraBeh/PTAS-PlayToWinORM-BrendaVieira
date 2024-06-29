@@ -156,6 +156,45 @@ app.post("/jogos/:id/delete", async (req, res) => {
   }
 });
 
+//Conquista
+
+const Conquista = require("./models/Conquista");
+
+app.get("/jogos/:id/conquistas", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const jogo = await Jogo.findByPk(id, { raw: true });
+
+  const conquistas = await Conquista.findAll({
+    raw: true,
+    where: { JogoId: id },
+  });
+
+  res.render("conquistas.handlebars", { jogo, conquistas });
+});
+
+//Formulário de cadastro de cartão
+app.get("/jogos/:id/conquistas/novaConquista", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const jogo = await Jogo.findByPk(id, { raw: true });
+
+  res.render("formConquista", { jogo });
+});
+
+//Cadastro de cartão
+app.post("/jogos/:id/conquistas/novoConquista", async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const dadosConquista = {
+    titulo: req.body.titulo,
+    descricao: req.body.descricao,
+    JogoId: id,
+  };
+
+  await Conquista.create(dadosConquista);
+
+  res.redirect(`/jogos/${id}/conquistas`);
+});
+
 app.listen(3000, () => {
   console.log("O servidor está rodando na porta 3000.")
 });

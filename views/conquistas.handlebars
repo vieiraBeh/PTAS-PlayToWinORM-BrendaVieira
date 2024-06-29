@@ -1,0 +1,24 @@
+<h1>Conquistas Cadastradas</h1>
+
+<a href="/jogos/{{jogo.id}}/conquistas/novaConquista">Cadastrar conquista</a>
+
+<table border="1">
+  <!-- table row -->
+  <tr>
+    <!-- table head -->
+    <td>Título</td>
+    <td>Descrição</td>
+  </tr>
+  {{#each conquistas}}
+    <tr>
+      <td>{{this.titulo}}</td>
+      <td>{{this.descricao}}</td>
+      <td>
+         <a href="/jogos/{{../jogo.id}}/conquistas/update">Atualizar conquista.</a>
+      <form action="/jogos/{{../jogo.id}}/conquistas/delete" method="post">
+      <input type="submit" value="EXCLUIR"/>
+      </form>
+      </td>
+    </tr>
+  {{/each}}
+</table>
