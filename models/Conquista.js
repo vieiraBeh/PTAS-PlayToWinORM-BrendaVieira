@@ -16,7 +16,7 @@ const Conquista = db.define(
   },
 );
 
-Cartao.belongsTo(Jogo);
-Usuario.hasMany(Conquista);
+Conquista.belongsTo(Jogo);
+Jogo.hasMany(Conquista);
 
 module.exports = Jogo;
