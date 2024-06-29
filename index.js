@@ -7,6 +7,10 @@ const exphbs = require("express-handlebars");
 // Instanciação do servidor
 const app = express();
 
+
+Jogo.belongsToMany(Usuario, { through: "aquisicoes" });
+Usuario.belongsToMany(Jogo, { through: "aquisicoes" });
+
 // Vinculação do Handlebars ao Express
 app.engine("handlebars", exphbs.engine());
 app.set("view engine", "handlebars");
